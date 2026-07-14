@@ -5,34 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="theme-color" content="#EFEDE6" />
+<meta name="theme-color" content="#FBF8F2" />
 <title>Field Notes</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
 <style>
-  :root{--paper:#EFEDE6;--card:#FAF9F5;--rule:#CFCCC0;--ink:#1B2430;--soft:#6B7280;--faint:#9AA0A6;--know:#2A6F6B;--act:#A85B2A;--ok:#3F6B3F;--due:#B3261E;}
+  :root{
+    --bg:#FBF8F2; --card:#FFFFFF; --rule:#E4DED2; --ink:#181F27; --soft:#6C7480; --faint:#A6AAB2;
+    --go:#1F8A5B; --go-soft:#E3F5EC;
+    --warm:#E08D26; --warm-soft:#FCEFDC;
+    --due:#D0342C; --due-soft:#FBE7E5;
+    --know:#2C6BB3;
+  }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;padding-top:env(safe-area-inset-top)}
-  .wrap{max-width:680px;margin:0 auto;padding:24px 16px 80px}
-  h1{font-size:26px;margin:0 0 12px;font-weight:600}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;padding-top:env(safe-area-inset-top)}
+  .wrap{max-width:680px;margin:0 auto;padding:22px 16px 90px}
+  h1{font-size:26px;margin:0;font-weight:700;letter-spacing:-.01em}
   header{border-bottom:2px solid var(--ink);padding-bottom:12px;margin-bottom:16px}
   .mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace}
-  .card{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--rule);padding:16px;margin-bottom:12px}
-  .lbl{font-family:'IBM Plex Mono',monospace;color:var(--soft);font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:6px}
-  button{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:5px 9px;background:transparent;color:var(--ink);border:1px solid var(--ink);cursor:pointer}
-  button.solid{background:var(--ink);color:var(--paper)}
-  button:disabled{opacity:.4;border-color:var(--rule);color:var(--faint);cursor:default}
-  input,textarea{font-family:'IBM Plex Mono',monospace;font-size:14px;width:100%;padding:8px;background:var(--paper);border:1px solid var(--rule);color:var(--ink);margin-bottom:8px;outline:none}
+  .small{font-size:11px;color:var(--soft);font-family:'IBM Plex Mono',monospace}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px;margin-bottom:12px}
+  .lbl{font-family:'IBM Plex Mono',monospace;color:var(--soft);font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:8px}
+  button{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 10px;background:#fff;color:var(--ink);border:1px solid var(--rule);border-radius:6px;cursor:pointer;font-weight:500}
+  button.solid{background:var(--ink);color:#fff;border-color:var(--ink)}
+  button.go{background:var(--go);color:#fff;border-color:var(--go)}
+  button.due{background:var(--due);color:#fff;border-color:var(--due)}
+  button:disabled{opacity:.45;cursor:default}
+  input,textarea{font-family:'IBM Plex Mono',monospace;font-size:14px;width:100%;padding:9px;background:#fff;border:1px solid var(--rule);border-radius:6px;color:var(--ink);margin-bottom:8px;outline:none}
   input:focus,textarea:focus{border-color:var(--ink)}
-  .row{display:flex;gap:6px;flex-wrap:wrap}
-  .chip{border:1px solid var(--rule);color:var(--soft);background:transparent}
-  .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
-  .banner{background:var(--due);color:#fff;padding:12px;margin-bottom:16px;font-family:'IBM Plex Mono',monospace}
-  .empty{border:1px dashed var(--rule);color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:24px;text-align:center}
-  .dot{width:9px;height:9px;display:inline-block;margin:1px}
-  .bar{height:6px;background:var(--rule);margin:8px 0}
-  .bar>div{height:100%}
-  .dim{opacity:.55}
-  .small{font-size:11px;color:var(--faint);font-family:'IBM Plex Mono',monospace}
+  .row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .chip{border:1px solid var(--rule);color:var(--soft);background:#fff}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .banner{background:var(--due);color:#fff;padding:14px;border-radius:10px;margin-bottom:16px;font-family:'IBM Plex Mono',monospace}
+  .empty{border:1px dashed var(--rule);border-radius:10px;color:var(--faint);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:26px;text-align:center;line-height:1.6}
+  .dot{width:10px;height:10px;display:inline-block;margin:1.5px;border-radius:2px}
+  .bar{height:8px;background:var(--rule);border-radius:4px;overflow:hidden;margin:8px 0}
+  .bar>div{height:100%;transition:width .3s}
+  .dim{opacity:.5}
+  .big{font-size:30px;font-weight:700;font-family:'IBM Plex Mono',monospace;line-height:1}
+  .tabbtn{padding:8px 13px;font-size:12px}
+  .streak{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--go);font-weight:600}
 </style>
 </head>
 <body>
@@ -41,8 +52,9 @@
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script type="text/babel">
-const {useState,useEffect} = React;
+const {useState} = React;
 const KEY="field-notes";
+const PILE_CAP=5, CYCLE=14, PASS=80;
 const uid=()=>Math.random().toString(36).slice(2,9);
 const today=()=>new Date().toISOString().slice(0,10);
 const dow=d=>new Date(d).getDay();
@@ -51,71 +63,74 @@ const dAdd=(d,n)=>new Date(new Date(d).getTime()+n*864e5).toISOString().slice(0,
 const dDiff=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
 const STEPS=[1,3,7,16,35,90];
 const tog=(a,v)=>a.includes(v)?a.filter(x=>x!==v):[...a,v];
-const blank={pile:[],notes:[],folders:["Health","Culture","Words","Other"],install:[],maint:[],cards:[],maxActive:5};
 const weekStart=d=>{const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x.toISOString().slice(0,10)};
-// is item m scheduled on date d?
+const blank={pile:[],notes:[],folders:["Health","Culture","Words","Other"],install:[],maint:[],cards:[],slots:5,cycleStart:null,history:[]};
+const PROMPT=q=>`${q}
+
+Answer with real, checkable sources — search the web and cite links. Tell me how strong the evidence is (study type), what is contested, and what it means in practice. Do not invent citations.`;
+
 function sched(m,d){
-  if(d < (m.from||today())) return false;
+  if(d<(m.from||today())) return false;
   const mode=m.mode||"week";
   if(mode==="every") return dDiff(m.from,d)%Math.max(1,m.n||2)===0;
-  if(mode==="cycle"){const on=Math.max(1,m.on||2),off=Math.max(1,m.off||1);
-    return ((dDiff(m.from,d))%(on+off))<on;}
+  if(mode==="cycle"){const on=Math.max(1,m.on||2),off=Math.max(1,m.off||1);return ((dDiff(m.from,d))%(on+off))<on;}
   if(mode==="target") return true;
   return (m.days||[]).includes(dow(d));
 }
-// weekly quota progress for target mode
 const wkCount=(m,d)=>m.done.filter(x=>weekStart(x)===weekStart(d)).length;
 function isDue(m,d){
   if(m.done.includes(d)) return false;
-  if((m.mode||"week")==="target") return wkCount(m,d) < Math.max(1,m.n||3);
+  if((m.mode||"week")==="target") return wkCount(m,d)<Math.max(1,m.n||3);
   return sched(m,d);
 }
 function schedText(m){
   const mode=m.mode||"week";
   if(mode==="every") return `every ${m.n||2} days`;
   if(mode==="cycle") return `${m.on||2} on / ${m.off||1} off`;
-  if(mode==="target") return `${m.n||3}× per week, any day`;
+  if(mode==="target") return `${m.n||3}x per week`;
   return (m.days||[]).map(d=>DAYS[d]).join(" ");
+}
+function cohort(s){
+  const act=s.install.filter(p=>p.start&&!p.installed&&!p.paused);
+  if(!act.length||!s.cycleStart) return {act,day:0,pct:0,expected:0,hit:0,ended:false};
+  const day=Math.min(CYCLE,dDiff(s.cycleStart,today())+1);
+  let expected=0,hit=0;
+  for(let i=0;i<day;i++){
+    const d=dAdd(s.cycleStart,i);
+    act.forEach(p=>{ if(d>=p.start){ expected++; if(p.done.includes(d)) hit++; } });
+  }
+  return {act,day,pct:expected?Math.round(hit/expected*100):0,expected,hit,ended:dDiff(s.cycleStart,today())>=CYCLE};
 }
 function exportData(s){
   const blob=new Blob([JSON.stringify(s,null,2)],{type:"application/json"});
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download=`field-notes-${today()}.json`;
-  a.click();
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`field-notes-${today()}.json`;a.click();
 }
-
-const PROMPT = q => `${q}
-
-Answer with real, checkable sources — search the web and cite links. Tell me how strong the evidence is (study type), what is contested, and what it means in practice. Do not invent citations.`;
 
 function App(){
   const [s,setS]=useState(()=>{try{const r=localStorage.getItem(KEY);return r?{...blank,...JSON.parse(r)}:blank}catch{return blank}});
   const [tab,setTab]=useState("today");
   const [open,setOpen]=useState(null);
   const save=n=>{setS(n);try{localStorage.setItem(KEY,JSON.stringify(n))}catch{}};
-
-  const dueToday=s.maint.filter(m=>isDue(m,today()));
-  const actives=s.install.filter(p=>p.start&&!p.installed&&!p.paused);
-  const instDue=actives.filter(p=>!p.done.includes(today()));
-  const cardsDue=s.cards.filter(c=>c.due<=today()).length;
+  const dueMaint=s.maint.filter(m=>isDue(m,today()));
+  const c=cohort(s);
+  const dueHabits=c.act.filter(p=>!p.done.includes(today()));
+  const cardsDue=s.cards.filter(x=>x.due<=today()).length;
   const note=open?s.notes.find(n=>n.id===open):null;
-
   return <div className="wrap">
     <header><h1>Field notes</h1></header>
-    {(dueToday.length||instDue.length)?
+    {(dueMaint.length||dueHabits.length)?
       <div className="banner">
-        <div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",marginBottom:4}}>Due today · {DAYS[dow(today())]}</div>
-        {instDue.map(p=><div key={p.id} style={{fontSize:14}}>▸ {p.text.toUpperCase()}</div>)}
-        {dueToday.map(m=><div key={m.id} style={{fontSize:14}}>▸ {m.text.toUpperCase()}</div>)}
+        <div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",marginBottom:6,opacity:.85}}>Due today · {DAYS[dow(today())]}</div>
+        {dueHabits.map(p=><div key={p.id} style={{fontSize:14,fontWeight:600}}>▸ {p.text.toUpperCase()}</div>)}
+        {dueMaint.map(m=><div key={m.id} style={{fontSize:14,fontWeight:600}}>▸ {m.text.toUpperCase()}</div>)}
       </div>:null}
-
     {note? <Note note={note} s={s} save={save} back={()=>setOpen(null)}/> : <>
-      <div className="row" style={{marginBottom:20}}>
-        {[["today","Today",dueToday.length+instDue.length],["pile","Pile",s.pile.length],["notes","Notes",s.notes.length],["review","Review",cardsDue]].map(([k,l,n])=>
-          <button key={k} className={tab===k?"solid":""} onClick={()=>setTab(k)} style={{padding:"7px 12px",fontSize:12}}>{l} <span style={{opacity:.6}}>{n}</span></button>)}
+      <div className="row" style={{marginBottom:18}}>
+        {[["today","Today",dueMaint.length+dueHabits.length],["pile","Pile",s.pile.length],
+          ["notes","Notes",s.notes.length],["review","Review",cardsDue]].map(([k,l,n])=>
+          <button key={k} className={"tabbtn "+(tab===k?"solid":"")} onClick={()=>setTab(k)}>{l} <span style={{opacity:.6}}>{n}</span></button>)}
       </div>
-      {tab==="today"&&<Today s={s} save={save}/>}
+      {tab==="today"&&<Today s={s} save={save} c={c}/>}
       {tab==="pile"&&<Pile s={s} save={save} setOpen={setOpen} setTab={setTab}/>}
       {tab==="notes"&&<Notes s={s} save={save} setOpen={setOpen}/>}
       {tab==="review"&&<Review s={s} save={save}/>}
@@ -123,105 +138,145 @@ function App(){
   </div>;
 }
 
-function Today({s,save}){
-  const [t,setT]=useState(""); const [ed,setEd]=useState(null);
+function Today({s,save,c}){
+  const [t,setT]=useState(""); const [mt,setMt]=useState("");
+  const [ed,setEd]=useState(null);
   const [draft,setDraft]=useState({mode:"week",days:[1,3,5],n:3,on:2,off:1});
   const setI=(id,p)=>save({...s,install:s.install.map(x=>x.id===id?{...x,...p}:x)});
   const setM=(id,p)=>save({...s,maint:s.maint.map(x=>x.id===id?{...x,...p}:x)});
-  const adh=p=>{const el=Math.max(1,dDiff(p.start,today())+1);return Math.round(p.done.length/el*100)};
-  const actives=s.install.filter(p=>p.start&&!p.installed&&!p.paused);
   const bench=s.install.filter(p=>!p.installed&&(!p.start||p.paused));
-  const full=actives.length>=s.maxActive;
-
-  const grid=m=>{const from=m.from||today();const span=Math.min(30,Math.max(1,dDiff(from,today())+1));const c=[];
+  const full=c.act.length>=s.slots;
+  const closeCycle=()=>{const passed=c.pct>=PASS;
+    save({...s,slots:passed?s.slots+1:s.slots,cycleStart:today(),
+      history:[{end:today(),pct:c.pct,passed,n:c.act.length},...s.history]})};
+  const streak=p=>{let n=0,d=today();while(p.done.includes(d)){n++;d=dAdd(d,-1)}return n};
+  const grid=m=>{const from=m.from||today();const span=Math.min(30,Math.max(1,dDiff(from,today())+1));const cells=[];
     for(let i=0;i<span;i++){const d=dAdd(from,i);const sc=sched(m,d);const dn=m.done.includes(d);const past=d<today();
-      c.push(<span key={d} title={d} className="dot" style={{background:dn?"var(--ok)":"var(--rule)",border:sc&&past&&!dn&&(m.mode||"week")!=="target"?"1px solid var(--due)":"none",opacity:sc?1:.25}}/>)}
-    return c};
+      cells.push(<span key={d} title={d} className="dot" style={{
+        background:dn?"var(--go)":"var(--rule)",
+        border:sc&&past&&!dn&&(m.mode||"week")!=="target"?"1px solid var(--due)":"none",
+        opacity:sc?1:.3}}/>)}
+    return cells};
 
   return <>
-    <div className="lbl">Installing — {actives.length} of {s.maxActive} slots</div>
-    <div className="row" style={{marginBottom:12}}>
-      {[1,3,5,8].map(n=><button key={n} className={"chip"+(s.maxActive===n?" on":"")} onClick={()=>save({...s,maxActive:n})}>{n} at once</button>)}
-    </div>
-
-    {actives.map(p=><div className="card" key={p.id} style={{borderLeftColor:"var(--act)"}}>
-      {ed===p.id
-        ? <><input value={p.text} onChange={e=>setI(p.id,{text:e.target.value})}/><button onClick={()=>setEd(null)}>done</button></>
-        : <div style={{fontSize:15}}>{p.text}</div>}
-      <div className="bar"><div style={{width:Math.min(100,adh(p))+"%",background:adh(p)>=80?"var(--ok)":"var(--act)"}}/></div>
-      <div className="mono" style={{fontSize:11,marginBottom:8}}>day {dDiff(p.start,today())+1} · {adh(p)}% adherence</div>
-      <div className="row">
-        <button className={p.done.includes(today())?"":"solid"} onClick={()=>setI(p.id,{done:tog(p.done,today())})}>
-          {p.done.includes(today())?"done today ✓":"mark done"}</button>
-        <button onClick={()=>setEd(ed===p.id?null:p.id)}>rename</button>
-        <button onClick={()=>setI(p.id,{paused:true})}>pause</button>
-        {dDiff(p.start,today())>=14&&adh(p)>=80&&<button onClick={()=>setI(p.id,{installed:true})}>installed →</button>}
-        <button onClick={()=>save({...s,install:s.install.filter(x=>x.id!==p.id)})}>drop</button>
+    {c.act.length>0 && <div className="card" style={{borderColor:c.pct>=PASS?"var(--go)":"var(--warm)"}}>
+      <div className="lbl">Cycle · day {c.day} of {CYCLE}</div>
+      <div className="row" style={{justifyContent:"space-between"}}>
+        <div className="big" style={{color:c.pct>=PASS?"var(--go)":"var(--warm)"}}>{c.pct}%</div>
+        <div className="small" style={{textAlign:"right"}}>{c.hit} of {c.expected} logged<br/>{c.act.length} habits · {s.slots} slots</div>
       </div>
-      {dDiff(p.start,today())>=14&&adh(p)>=80&&<div className="small" style={{marginTop:6}}>14 days at 80%+ — you can retire it from active tracking.</div>}
-    </div>)}
+      <div className="bar"><div style={{width:Math.min(100,c.pct)+"%",background:c.pct>=PASS?"var(--go)":"var(--warm)"}}/></div>
+      <div className="bar" style={{height:4}}><div style={{width:(c.day/CYCLE*100)+"%",background:"var(--ink)"}}/></div>
+      {c.ended
+        ? <div style={{marginTop:10}}>
+            <div className="small" style={{marginBottom:8,color:c.pct>=PASS?"var(--go)":"var(--due)"}}>
+              {c.pct>=PASS?`Passed at ${c.pct}%. Closing earns you a ${s.slots+1}th slot.`
+                          :`Ended at ${c.pct}%, below ${PASS}%. No new slot; a fresh ${CYCLE} days starts.`}</div>
+            <button className={c.pct>=PASS?"go":"solid"} onClick={closeCycle}>close cycle</button>
+          </div>
+        : <div className="small" style={{marginTop:8}}>
+            {c.pct>=PASS?`On track. Hold ${PASS}%+ to day ${CYCLE} and you earn a slot.`
+                        :`Below ${PASS}%. ${CYCLE-c.day} days left to pull it up.`}</div>}
+    </div>}
+
+    {c.act.map(p=>{
+      const dn=p.done.includes(today()); const st=streak(p);
+      return <div className="card" key={p.id} style={{borderLeftWidth:4,borderLeftColor:dn?"var(--go)":"var(--warm)",background:dn?"var(--go-soft)":"#fff"}}>
+        {ed===p.id
+          ? <><input value={p.text} onChange={e=>setI(p.id,{text:e.target.value})}/><button onClick={()=>setEd(null)}>done</button></>
+          : <div className="row" style={{justifyContent:"space-between"}}>
+              <div style={{fontSize:15,fontWeight:600,flex:1}}>{p.text}</div>
+              <button className={dn?"":"go"} onClick={()=>setI(p.id,{done:tog(p.done,today())})}>{dn?"✓ done":"log"}</button>
+            </div>}
+        <div className="row" style={{marginTop:8,justifyContent:"space-between"}}>
+          <span className="streak">{st>0?`${st} day streak`:"no streak"}</span>
+          <span className="row">
+            <button onClick={()=>setEd(ed===p.id?null:p.id)}>rename</button>
+            <button onClick={()=>setI(p.id,{paused:true})}>pause</button>
+            <button onClick={()=>save({...s,install:s.install.filter(x=>x.id!==p.id)})}>drop</button>
+          </span>
+        </div>
+      </div>;
+    })}
 
     {bench.map(p=><div className="card" key={p.id}>
       <div className="lbl">{p.paused?"Paused":"Waiting"}</div>
       <input value={p.text} onChange={e=>setI(p.id,{text:e.target.value})}/>
       <div className="row">
-        <button disabled={full} onClick={()=>setI(p.id,{start:p.start||today(),paused:false})}>{full?"slots full":"start"}</button>
+        <button className={full?"":"solid"} disabled={full}
+          onClick={()=>save({...s,cycleStart:s.cycleStart||today(),
+            install:s.install.map(x=>x.id===p.id?{...x,start:today(),paused:false}:x)})}>
+          {full?`slots full (${s.slots})`:"start"}</button>
         <button onClick={()=>save({...s,install:s.install.filter(x=>x.id!==p.id)})}>drop</button>
       </div>
+      {full&&<div className="small" style={{marginTop:6}}>Pass a cycle at {PASS}%+ to earn another slot, or pause one.</div>}
     </div>)}
+
+    <div className="card">
+      <div className="lbl">Add habit (daily)</div>
+      <input value={t} onChange={e=>setT(e.target.value)} placeholder="e.g. Sleep 8 hours"/>
+      <button className="solid" onClick={()=>{if(!t.trim())return;
+        save({...s,install:[...s.install,{id:uid(),text:t.trim(),start:null,done:[],installed:false}]});setT("")}}>add</button>
+    </div>
+
+    {s.history.length>0&&<div className="card">
+      <div className="lbl">Past cycles</div>
+      {s.history.map((h,i)=><div key={i} className="small" style={{color:h.passed?"var(--go)":"var(--due)"}}>
+        {h.end} · {h.n} habits · {h.pct}% · {h.passed?"passed":"missed"}</div>)}
+    </div>}
 
     <div className="lbl" style={{marginTop:24}}>Maintenance</div>
     {s.maint.map(m=>{
       const du=isDue(m,today()); const dn=m.done.includes(today()); const e=ed===m.id;
-      const active=du||dn;
-      return <div className={"card"+(!active&&!e?" dim":"")} key={m.id} style={{borderLeftColor:du?"var(--due)":dn?"var(--ok)":"var(--rule)"}}>
+      return <div className={"card"+(!du&&!dn&&!e?" dim":"")} key={m.id}
+        style={{borderLeftWidth:4,borderLeftColor:du?"var(--due)":dn?"var(--go)":"var(--rule)",background:dn?"var(--go-soft)":du?"var(--due-soft)":"#fff"}}>
         {e? <>
           <input value={m.text} onChange={ev=>setM(m.id,{text:ev.target.value})}/>
           <SchedEditor m={m} setM={setM}/>
           <div className="row"><button className="solid" onClick={()=>setEd(null)}>done</button>
-          <button onClick={()=>save({...s,maint:s.maint.filter(x=>x.id!==m.id)})}>delete</button></div>
+            <button onClick={()=>save({...s,maint:s.maint.filter(x=>x.id!==m.id)})}>delete</button></div>
         </> : <>
-          <div style={{display:"flex",justifyContent:"space-between",gap:8}}>
+          <div className="row" style={{justifyContent:"space-between"}}>
             <div style={{flex:1}}>
-              <div style={{fontSize:14}}>{m.text}</div>
-              <div className="small">{schedText(m)}
-                {(m.mode||"week")==="target"?` · ${wkCount(m,today())}/${m.n||3} this week`:""}</div>
+              <div style={{fontSize:14,fontWeight:600}}>{m.text}</div>
+              <div className="small">{schedText(m)}{(m.mode||"week")==="target"?` · ${wkCount(m,today())}/${m.n||3} this week`:""}</div>
             </div>
-            {(du||dn)&&<button className={dn?"":"solid"} onClick={()=>setM(m.id,{done:tog(m.done,today())})}>{dn?"✓ undo":"log it"}</button>}
+            {(du||dn)&&<button className={dn?"":"due"} onClick={()=>setM(m.id,{done:tog(m.done,today())})}>{dn?"✓ done":"log"}</button>}
           </div>
           <div style={{marginTop:10}}>{grid(m)}</div>
-          <div className="small" style={{marginTop:4}}>since {m.from||today()} · {m.done.length} logged</div>
-          <div style={{marginTop:8}}><button onClick={()=>setEd(m.id)}>edit</button></div>
+          <div className="row" style={{marginTop:6,justifyContent:"space-between"}}>
+            <span className="small">{m.done.length} logged since {m.from||today()}</span>
+            <button onClick={()=>setEd(m.id)}>edit</button>
+          </div>
         </>}
       </div>;
     })}
 
     <div className="card">
       <div className="lbl">Add maintenance item</div>
-      <input value={t} onChange={e=>setT(e.target.value)} placeholder="e.g. Take medicine"/>
+      <input value={mt} onChange={e=>setMt(e.target.value)} placeholder="e.g. Take medicine"/>
       <SchedEditor m={draft} setM={(_,p)=>setDraft({...draft,...p})}/>
-      <button className="solid" onClick={()=>{if(!t.trim())return;
-        save({...s,maint:[...s.maint,{id:uid(),text:t.trim(),done:[],from:today(),...draft}]});
-        setT("");setDraft({mode:"week",days:[1,3,5],n:3,on:2,off:1})}}>Add</button>
+      <button className="solid" onClick={()=>{if(!mt.trim())return;
+        save({...s,maint:[...s.maint,{id:uid(),text:mt.trim(),done:[],from:today(),...draft}]});
+        setMt("");setDraft({mode:"week",days:[1,3,5],n:3,on:2,off:1})}}>add</button>
     </div>
 
     <div className="card">
       <div className="lbl">Data</div>
       <div className="row">
         <button onClick={()=>exportData(s)}>export backup</button>
-        <label style={{display:"inline-block"}}>
+        <label>
           <input type="file" accept="application/json" style={{display:"none"}} onChange={e=>{
             const f=e.target.files[0]; if(!f)return;
             const r=new FileReader();
             r.onload=()=>{try{const d=JSON.parse(r.result);
               if(confirm("Replace all current data with this backup?")) save({...blank,...d});
-            }catch{alert("Not a valid backup file.")}};
-            r.readAsText(f);
-          }}/>
-          <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:11,padding:"5px 9px",border:"1px solid var(--ink)",cursor:"pointer"}}>import backup</span>
+            }catch(err){alert("Not a valid backup file.")}};
+            r.readAsText(f);}}/>
+          <span className="mono" style={{fontSize:11,padding:"6px 10px",border:"1px solid var(--rule)",borderRadius:6,background:"#fff",cursor:"pointer"}}>import backup</span>
         </label>
       </div>
-      <div className="small" style={{marginTop:8}}>Browser storage can be cleared by iOS. Export every few weeks.</div>
+      <div className="small" style={{marginTop:8}}>iOS can clear website storage. Export every few weeks.</div>
     </div>
   </>;
 }
@@ -236,18 +291,17 @@ function SchedEditor({m,setM}){
     </div>
     {mode==="week"&&<div className="row">{DAYS.map((d,i)=>
       <button key={i} className={"chip"+((m.days||[]).includes(i)?" on":"")} onClick={()=>set({days:tog(m.days||[],i)})}>{d}</button>)}</div>}
-    {mode==="every"&&<div className="row" style={{alignItems:"center"}}>
-      <span className="small">every</span>
+    {mode==="every"&&<div className="row"><span className="small">every</span>
       <input type="number" min="1" max="30" value={m.n||2} onChange={e=>set({n:+e.target.value})} style={{width:70,marginBottom:0}}/>
-      <span className="small">days, counting from the start date</span></div>}
-    {mode==="cycle"&&<div className="row" style={{alignItems:"center"}}>
+      <span className="small">days</span></div>}
+    {mode==="cycle"&&<div className="row">
       <input type="number" min="1" max="14" value={m.on||2} onChange={e=>set({on:+e.target.value})} style={{width:60,marginBottom:0}}/>
-      <span className="small">days on,</span>
+      <span className="small">on,</span>
       <input type="number" min="1" max="14" value={m.off||1} onChange={e=>set({off:+e.target.value})} style={{width:60,marginBottom:0}}/>
       <span className="small">off, repeating</span></div>}
-    {mode==="target"&&<div className="row" style={{alignItems:"center"}}>
+    {mode==="target"&&<div className="row">
       <input type="number" min="1" max="14" value={m.n||3} onChange={e=>set({n:+e.target.value})} style={{width:60,marginBottom:0}}/>
-      <span className="small">times per week, any days you like</span></div>}
+      <span className="small">times per week, any days</span></div>}
   </div>;
 }
 
@@ -255,24 +309,29 @@ function Pile({s,save,setOpen,setTab}){
   const [t,setT]=useState(""); const [why,setWhy]=useState("");
   const [kind,setKind]=useState("question"); const [folder,setFolder]=useState(s.folders[0]||"Other");
   const [cp,setCp]=useState(null);
+  const full=s.pile.length>=PILE_CAP;
   return <>
-    <div className="card" style={{borderLeftColor:"var(--know)"}}>
-      <div className="lbl">Capture</div>
-      <input value={t} onChange={e=>setT(e.target.value)} placeholder="The question / the thing"/>
-      <input value={why} onChange={e=>setWhy(e.target.value)} placeholder="Why (optional)"/>
-      <div className="row" style={{marginBottom:8}}>
-        <button className={"chip"+(kind==="question"?" on":"")} onClick={()=>setKind("question")}>question</button>
-        <button className={"chip"+(kind==="habit"?" on":"")} onClick={()=>setKind("habit")}>new habit</button>
-      </div>
-      <div className="row" style={{marginBottom:10}}>
-        {s.folders.map(f=><button key={f} className={"chip"+(folder===f?" on":"")} onClick={()=>setFolder(f)}>{f}</button>)}
-      </div>
-      <button className="solid" onClick={()=>{if(!t.trim())return;
-        save({...s,pile:[{id:uid(),text:t.trim(),why:why.trim(),kind,folder},...s.pile]});setT("");setWhy("")}}>Add to pile</button>
+    <div className="card" style={{borderLeftWidth:4,borderLeftColor:"var(--know)"}}>
+      <div className="lbl">Capture — {s.pile.length} of {PILE_CAP}</div>
+      {full
+        ? <div className="small" style={{color:"var(--due)"}}>Pile is full. Process or drop something before adding more.</div>
+        : <>
+          <input value={t} onChange={e=>setT(e.target.value)} placeholder="The question / the thing"/>
+          <input value={why} onChange={e=>setWhy(e.target.value)} placeholder="Why (optional)"/>
+          <div className="row" style={{marginBottom:8}}>
+            <button className={"chip"+(kind==="question"?" on":"")} onClick={()=>setKind("question")}>question</button>
+            <button className={"chip"+(kind==="habit"?" on":"")} onClick={()=>setKind("habit")}>new habit</button>
+          </div>
+          <div className="row" style={{marginBottom:10}}>
+            {s.folders.map(f=><button key={f} className={"chip"+(folder===f?" on":"")} onClick={()=>setFolder(f)}>{f}</button>)}
+          </div>
+          <button className="solid" onClick={()=>{if(!t.trim())return;
+            save({...s,pile:[{id:uid(),text:t.trim(),why:why.trim(),kind,folder},...s.pile]});setT("");setWhy("")}}>add to pile</button>
+        </>}
     </div>
     {!s.pile.length? <div className="empty">Pile empty.</div> : s.pile.map(p=>
-      <div className="card" key={p.id} style={{borderLeftColor:p.kind==="habit"?"var(--act)":"var(--know)"}}>
-        <div style={{fontSize:14}}>{p.text}</div>
+      <div className="card" key={p.id} style={{borderLeftWidth:4,borderLeftColor:p.kind==="habit"?"var(--warm)":"var(--know)"}}>
+        <div style={{fontSize:14,fontWeight:500}}>{p.text}</div>
         <div className="small" style={{marginBottom:10}}>{p.folder}{p.why?" · "+p.why:""}</div>
         <div className="row">
           {p.kind==="habit"
@@ -293,13 +352,13 @@ function Notes({s,save,setOpen}){
   const [f,setF]=useState("All"); const [nf,setNf]=useState(""); const [ed,setEd]=useState(false);
   const list=f==="All"?s.notes:s.notes.filter(n=>n.folder===f);
   return <>
-    <div className="row" style={{marginBottom:8}}>
+    <div className="row" style={{marginBottom:10}}>
       <button className={"chip"+(f==="All"?" on":"")} onClick={()=>setF("All")}>All {s.notes.length}</button>
       {s.folders.map(x=><button key={x} className={"chip"+(f===x?" on":"")} onClick={()=>setF(x)}>{x} {s.notes.filter(n=>n.folder===x).length}</button>)}
       <button onClick={()=>setEd(!ed)}>{ed?"done":"edit"}</button>
     </div>
     {ed&&<div className="card">
-      {s.folders.map(x=><div key={x} style={{display:"flex",justifyContent:"space-between",marginBottom:8}}>
+      {s.folders.map(x=><div key={x} className="row" style={{justifyContent:"space-between",marginBottom:8}}>
         <span className="mono" style={{fontSize:12}}>{x}</span>
         <span className="row">
           <button onClick={()=>{const v=prompt("Rename folder",x);if(!v||!v.trim()||v===x)return;
@@ -314,8 +373,8 @@ function Notes({s,save,setOpen}){
       </div>
     </div>}
     {!list.length? <div className="empty">No notes here.</div> : list.map(n=>
-      <div className="card" key={n.id} style={{borderLeftColor:n.answer?"var(--know)":"var(--rule)",cursor:"pointer"}} onClick={()=>setOpen(n.id)}>
-        <div style={{fontSize:14}}>{n.text}</div>
+      <div className="card" key={n.id} style={{borderLeftWidth:4,borderLeftColor:n.answer?"var(--know)":"var(--rule)",cursor:"pointer"}} onClick={()=>setOpen(n.id)}>
+        <div style={{fontSize:14,fontWeight:500}}>{n.text}</div>
         <div className="small">{n.folder} · {n.at}{n.answer?"":" · empty"}{n.status==="closed"?" · not acting":""}</div>
       </div>)}
   </>;
@@ -328,14 +387,13 @@ function Note({note,s,save,back}){
   return <>
     <button onClick={back}>← back</button>
     <div style={{height:16}}/>
-    <div className="card" style={{borderLeftColor:"var(--know)"}}>
+    <div className="card" style={{borderLeftWidth:4,borderLeftColor:"var(--know)"}}>
       <input value={note.text} onChange={e=>upd({text:e.target.value})}/>
       <div className="row" style={{marginBottom:10}}>
         {s.folders.map(f=><button key={f} className={"chip"+(note.folder===f?" on":"")} onClick={()=>upd({folder:f})}>{f}</button>)}
       </div>
       <button onClick={()=>{navigator.clipboard&&navigator.clipboard.writeText(PROMPT(note.text));setCp(true);setTimeout(()=>setCp(false),1500)}}>{cp?"copied ✓":"copy question for Claude"}</button>
     </div>
-
     <div className="card">
       <div className="lbl">Answer</div>
       <textarea rows="10" value={note.answer} onChange={e=>upd({answer:e.target.value})} placeholder="Paste the answer here"/>
@@ -344,19 +402,18 @@ function Note({note,s,save,back}){
       <div className="lbl">Confidence</div>
       <div className="row">{["high","medium","low"].map(c=><button key={c} className={"chip"+(note.confidence===c?" on":"")} onClick={()=>upd({confidence:c})}>{c}</button>)}</div>
     </div>
-
     <div className="card">
       <div className="lbl">Review card</div>
       <input value={note.card.front} onChange={e=>upd({card:{...note.card,front:e.target.value}})} placeholder="Question side"/>
       <input value={note.card.back} onChange={e=>upd({card:{...note.card,back:e.target.value}})} placeholder="Answer side (required)"/>
-      {inDeck && <div className="small" style={{marginBottom:8}}>Already in the review deck.</div>}
-      {!note.card.back && <div className="small" style={{marginBottom:8}}>Fill the answer side to add it to review.</div>}
+      {inDeck&&<div className="small" style={{marginBottom:8,color:"var(--go)"}}>In the review deck.</div>}
+      {!note.card.back&&!inDeck&&<div className="small" style={{marginBottom:8}}>Fill the answer side to add it to review.</div>}
       <div className="row">
-        <button className="solid" disabled={!note.card.back||inDeck}
+        <button className="go" disabled={!note.card.back||inDeck}
           onClick={()=>save({...s,cards:[...s.cards,{id:note.id,front:note.card.front,back:note.card.back,step:0,due:today()}],
             notes:s.notes.map(n=>n.id===note.id?{...n,status:"kept"}:n)})}>add to review</button>
         <button onClick={()=>save({...s,install:[...s.install,{id:uid(),text:note.text,start:null,done:[],installed:false}]})}>new habit</button>
-        <button onClick={()=>save({...s,maint:[...s.maint,{id:uid(),text:note.text,days:[1,2,3,4,5],done:[],from:today()}]})}>maintenance</button>
+        <button onClick={()=>save({...s,maint:[...s.maint,{id:uid(),text:note.text,mode:"week",days:[1,2,3,4,5],done:[],from:today()}]})}>maintenance</button>
         <button onClick={()=>upd({status:"closed"})}>understood, not acting</button>
         <button onClick={()=>{save({...s,notes:s.notes.filter(n=>n.id!==note.id)});back()}}>delete</button>
       </div>
@@ -367,18 +424,18 @@ function Note({note,s,save,back}){
 function Review({s,save}){
   const due=s.cards.filter(c=>c.due<=today());
   const [i,setI]=useState(0); const [show,setShow]=useState(false);
-  if(!s.cards.length) return <div className="empty">No cards yet. Open a note, fill both sides of the review card, press "add to review".</div>;
-  if(!due.length||i>=due.length) return <div className="empty">Nothing due. Next: {s.cards.map(c=>c.due).sort()[0]}</div>;
+  if(!s.cards.length) return <div className="empty">No cards yet.<br/>Open a note, fill both sides of the review card, press "add to review".</div>;
+  if(!due.length||i>=due.length) return <div className="empty">Nothing due.<br/>Next: {s.cards.map(c=>c.due).sort()[0]}</div>;
   const c=due[i];
   const grade=got=>{const step=got?Math.min(c.step+1,STEPS.length-1):0;
     save({...s,cards:s.cards.map(x=>x.id===c.id?{...x,step,due:dAdd(today(),STEPS[step])}:x)});setShow(false);setI(i+1)};
   return <>
-    <div className="small" style={{marginBottom:10}}>{due.length-i} due</div>
-    <div className="card" style={{borderLeftColor:"var(--know)"}}>
-      <div style={{fontSize:16,marginBottom:16}}>{c.front}</div>
+    <div className="small" style={{marginBottom:10}}>{due.length-i} due · next in {STEPS[c.step]} days if you know it</div>
+    <div className="card" style={{borderLeftWidth:4,borderLeftColor:"var(--know)"}}>
+      <div style={{fontSize:17,marginBottom:18,fontWeight:500}}>{c.front}</div>
       {show? <>
-        <div style={{borderTop:"1px solid var(--rule)",paddingTop:12,marginBottom:16,fontSize:14}}>{c.back}</div>
-        <div className="row"><button className="solid" onClick={()=>grade(true)}>knew it</button><button onClick={()=>grade(false)}>didn't</button></div>
+        <div style={{borderTop:"1px solid var(--rule)",paddingTop:14,marginBottom:16,fontSize:14}}>{c.back}</div>
+        <div className="row"><button className="go" onClick={()=>grade(true)}>knew it</button><button onClick={()=>grade(false)}>didn't</button></div>
       </> : <button className="solid" onClick={()=>setShow(true)}>show</button>}
     </div>
   </>;
