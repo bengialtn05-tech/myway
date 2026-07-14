@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="theme-color" content="#FBF8F2" />
-<title>Field Notes</title>
+<title>Bengi</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" />
 <style>
   :root{
@@ -64,7 +64,7 @@ const dDiff=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
 const STEPS=[1,3,7,16,35,90];
 const tog=(a,v)=>a.includes(v)?a.filter(x=>x!==v):[...a,v];
 const weekStart=d=>{const x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x.toISOString().slice(0,10)};
-const blank={pile:[],notes:[],folders:["Health","Culture","Words","Other"],install:[],maint:[],cards:[],slots:5,cycleStart:null,history:[]};
+const blank={title:"Bengi",pile:[],notes:[],folders:["Health","Culture","Words","Other"],install:[],maint:[],cards:[],slots:5,cycleStart:null,history:[]};
 const PROMPT=q=>`${q}
 
 Answer with real, checkable sources — search the web and cite links. Tell me how strong the evidence is (study type), what is contested, and what it means in practice. Do not invent citations.`;
@@ -116,8 +116,15 @@ function App(){
   const dueHabits=c.act.filter(p=>!p.done.includes(today()));
   const cardsDue=s.cards.filter(x=>x.due<=today()).length;
   const note=open?s.notes.find(n=>n.id===open):null;
+  const [edT,setEdT]=useState(false);
   return <div className="wrap">
-    <header><h1>Field notes</h1></header>
+    <header>
+      {edT
+        ? <input autoFocus value={s.title||""} onChange={e=>save({...s,title:e.target.value})}
+            onBlur={()=>setEdT(false)} onKeyDown={e=>e.key==="Enter"&&setEdT(false)}
+            style={{fontSize:22,fontWeight:700,marginBottom:0}}/>
+        : <h1 onClick={()=>setEdT(true)} style={{cursor:"text"}}>{s.title||"Untitled"}</h1>}
+    </header>
     {(dueMaint.length||dueHabits.length)?
       <div className="banner">
         <div style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",marginBottom:6,opacity:.85}}>Due today · {DAYS[dow(today())]}</div>
@@ -309,12 +316,16 @@ function Pile({s,save,setOpen,setTab}){
   const [t,setT]=useState(""); const [why,setWhy]=useState("");
   const [kind,setKind]=useState("question"); const [folder,setFolder]=useState(s.folders[0]||"Other");
   const [cp,setCp]=useState(null);
-  const full=s.pile.length>=PILE_CAP;
+  const unanswered=s.notes.filter(n=>!n.answer||!n.answer.trim()).length;
+  const openItems=s.pile.length+unanswered;
+  const full=openItems>=PILE_CAP;
   return <>
     <div className="card" style={{borderLeftWidth:4,borderLeftColor:"var(--know)"}}>
-      <div className="lbl">Capture — {s.pile.length} of {PILE_CAP}</div>
+      <div className="lbl">Capture — {openItems} of {PILE_CAP} open</div>
       {full
-        ? <div className="small" style={{color:"var(--due)"}}>Pile is full. Process or drop something before adding more.</div>
+        ? <div className="small" style={{color:"var(--due)"}}>
+            {PILE_CAP} items are open ({s.pile.length} in the pile, {unanswered} unanswered notes).
+            Answer one or drop one before capturing more.</div>
         : <>
           <input value={t} onChange={e=>setT(e.target.value)} placeholder="The question / the thing"/>
           <input value={why} onChange={e=>setWhy(e.target.value)} placeholder="Why (optional)"/>
@@ -381,7 +392,11 @@ function Notes({s,save,setOpen}){
 }
 
 function Note({note,s,save,back}){
-  const upd=p=>save({...s,notes:s.notes.map(n=>n.id===note.id?{...n,...p}:n)});
+  const upd=p=>{
+    const notes=s.notes.map(n=>n.id===note.id?{...n,...p}:n);
+    const cards=p.card ? s.cards.map(c=>c.id===note.id?{...c,front:p.card.front,back:p.card.back}:c) : s.cards;
+    save({...s,notes,cards});
+  };
   const [cp,setCp]=useState(false);
   const inDeck=s.cards.some(c=>c.id===note.id);
   return <>
@@ -406,12 +421,15 @@ function Note({note,s,save,back}){
       <div className="lbl">Review card</div>
       <input value={note.card.front} onChange={e=>upd({card:{...note.card,front:e.target.value}})} placeholder="Question side"/>
       <input value={note.card.back} onChange={e=>upd({card:{...note.card,back:e.target.value}})} placeholder="Answer side (required)"/>
-      {inDeck&&<div className="small" style={{marginBottom:8,color:"var(--go)"}}>In the review deck.</div>}
+      {inDeck&&<div className="small" style={{marginBottom:8,color:"var(--go)"}}>In the review deck — edits above update the card.</div>}
       {!note.card.back&&!inDeck&&<div className="small" style={{marginBottom:8}}>Fill the answer side to add it to review.</div>}
       <div className="row">
-        <button className="go" disabled={!note.card.back||inDeck}
-          onClick={()=>save({...s,cards:[...s.cards,{id:note.id,front:note.card.front,back:note.card.back,step:0,due:today()}],
-            notes:s.notes.map(n=>n.id===note.id?{...n,status:"kept"}:n)})}>add to review</button>
+        {inDeck
+          ? <button className="due" onClick={()=>save({...s,cards:s.cards.filter(c=>c.id!==note.id),
+              notes:s.notes.map(n=>n.id===note.id?{...n,status:"open"}:n)})}>remove from review</button>
+          : <button className="go" disabled={!note.card.back}
+              onClick={()=>save({...s,cards:[...s.cards,{id:note.id,front:note.card.front,back:note.card.back,step:0,due:today()}],
+                notes:s.notes.map(n=>n.id===note.id?{...n,status:"kept"}:n)})}>add to review</button>}
         <button onClick={()=>save({...s,install:[...s.install,{id:uid(),text:note.text,start:null,done:[],installed:false}]})}>new habit</button>
         <button onClick={()=>save({...s,maint:[...s.maint,{id:uid(),text:note.text,mode:"week",days:[1,2,3,4,5],done:[],from:today()}]})}>maintenance</button>
         <button onClick={()=>upd({status:"closed"})}>understood, not acting</button>
@@ -435,8 +453,21 @@ function Review({s,save}){
       <div style={{fontSize:17,marginBottom:18,fontWeight:500}}>{c.front}</div>
       {show? <>
         <div style={{borderTop:"1px solid var(--rule)",paddingTop:14,marginBottom:16,fontSize:14}}>{c.back}</div>
-        <div className="row"><button className="go" onClick={()=>grade(true)}>knew it</button><button onClick={()=>grade(false)}>didn't</button></div>
-      </> : <button className="solid" onClick={()=>setShow(true)}>show</button>}
+        <div className="row" style={{justifyContent:"space-between"}}>
+          <span className="row">
+            <button className="go" onClick={()=>grade(true)}>knew it</button>
+            <button onClick={()=>grade(false)}>didn't</button>
+          </span>
+          <button onClick={()=>{if(!confirm("Delete this card from the review deck?"))return;
+            save({...s,cards:s.cards.filter(x=>x.id!==c.id),
+              notes:s.notes.map(n=>n.id===c.id?{...n,status:"open"}:n)});setShow(false)}}>delete card</button>
+        </div>
+      </> : <div className="row" style={{justifyContent:"space-between"}}>
+        <button className="solid" onClick={()=>setShow(true)}>show</button>
+        <button onClick={()=>{if(!confirm("Delete this card from the review deck?"))return;
+          save({...s,cards:s.cards.filter(x=>x.id!==c.id),
+            notes:s.notes.map(n=>n.id===c.id?{...n,status:"open"}:n)})}}>delete card</button>
+      </div>}
     </div>
   </>;
 }
